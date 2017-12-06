@@ -118,4 +118,4 @@ for gdxfile in gdx_input_files:
     with gdxpds.gdx.GdxFile() as gdx:
         for symbol in changed_list:
             gdx.append(symbol)
-        gdx.write('out/' + gdxfile['filename'] + '_changed.gdx')
+        gdx.write('out/changed params/' + gdxfile['filename'] + '.gdx')
