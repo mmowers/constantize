@@ -6,9 +6,13 @@ base_year = 2020
 
 #Files to use
 gdx_input_files = [
-{'filename': 'input', 'path': '../inout/includes/'},
+    {'filename': 'input', 'path': '../inout/includes/'},
+    {'filename': 'PrescriptiveBuilds', 'path': '../inout/includes/'},
+    {'filename': 'PrescriptiveRetirements', 'path': '../inout/includes/'},
+    {'filename': 'rggi', 'path': '../inout/includes/'},
+    {'filename': 'dSolar', 'path': '../inout/includes/'},
+    {'filename': 'WindInput', 'path': '../inout/includes/Wind_Inputs/'},
 ]
-
 
 #excluded params:
 excluded_params = [
@@ -36,6 +40,21 @@ excluded_params = [
 
 #parameters to zero out post-base-year
 zeroed_params = [
+    #PrescriptiveBuilds.gdx
+    'PrescriptiveBuildsNonQn',
+    'PrescriptiveBuildsnqct',
+    'PrescriptiveBuildsStorage',
+    'PrescriptiveBuildsWind',
+    'WindBuilds',
+
+    #PrescriptiveRetirements.gdx
+    'ABBPrescriptiveRetNuke60',
+    'ABBPrescriptiveRetNuke80',
+    'ABBPrescriptiveRetNukeEarly',
+    'ABBPrescriptiveRetNukeRef',
+    'PrescriptiveRet',
+
+    #input.gdx
     'PrescriptiveBuildshydcats',
     'WindBuildsIn',
     'WindRetireIn',
