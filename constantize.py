@@ -9,6 +9,7 @@ gdx_input_files = [
     {'filename': 'input', 'path': '../inout/includes/'},
     {'filename': 'PrescriptiveBuilds', 'path': '../inout/includes/'},
     {'filename': 'PrescriptiveRetirements', 'path': '../inout/includes/'},
+    {'filename': 'CIRAinputs', 'path': '../inout/includes/'},
     {'filename': 'rggi', 'path': '../inout/includes/'},
     {'filename': 'dSolar', 'path': '../inout/includes/'},
     {'filename': 'WindInput', 'path': '../inout/includes/Wind_Inputs/'},
