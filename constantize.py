@@ -95,8 +95,8 @@ for gdxfile in gdx_input_files:
     with gdxpds.gdx.GdxFile() as gdx:
         for symbol in symbol_list:
             gdx.append(symbol)
-        gdx.write(gdxfile['filename'] + '.gdx')
+        gdx.write('out/' + gdxfile['filename'] + '.gdx')
     with gdxpds.gdx.GdxFile() as gdx:
         for symbol in changed_list:
             gdx.append(symbol)
-        gdx.write(gdxfile['filename'] + '_changed.gdx')
+        gdx.write('out/' + gdxfile['filename'] + '_changed.gdx')
