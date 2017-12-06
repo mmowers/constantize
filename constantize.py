@@ -8,13 +8,14 @@ base_year = 2024
 distPVSwitch = 'StScen2017_Mid_Case'
 distPVFiles = ['distPVcap', 'distPVelecprice']
 
+WindCaseSwitch = 'ATB_2017_Wind_Mid_Cost'
+
 #Files to use
 gdx_input_files = [
     {'filename': 'input', 'path': '../inout/includes/'},
     {'filename': 'PrescriptiveBuilds', 'path': '../inout/includes/'},
     {'filename': 'PrescriptiveRetirements', 'path': '../inout/includes/'},
     {'filename': 'rggi', 'path': '../inout/includes/'},
-    {'filename': 'WindInput', 'path': '../inout/includes/Wind_Inputs/'},
 ]
 
 #excluded params:
@@ -70,12 +71,31 @@ for dirname in ['out','out/changed params']:
             os.remove(os.path.join(dirname, f))
 
 #First do csv modifications
+#distributed PV:
 for f in distPVFiles:
     df = pd.read_csv('../inout/includes/dSolar_Inputs/' + f + '_' + distPVSwitch + '.csv', index_col=0)
     for y in df.columns:
         if int(y) > base_year:
             df[y] = df[str(base_year)]
     df.to_csv('out/' + f + '_' + distPVSwitch + '.csv')
+
+#Wind:
+dfs = []
+dfw = pd.read_csv('../inout/includes/Wind_Inputs/' + WindCaseSwitch + '.csv', index_col=0)
+index_cols = ['Tech', 'Wind class']
+val_cols = ['CFc', 'Cap cost 1000$/MW', 'Fixed O&M 1000$/MW-yr', 'Var O&M $/MWh']
+for v in val_cols:
+    df = dfw.pivot_table(index=index_cols, columns='Year', values=v).reset_index()
+    df['type'] = v
+    yr_cols = [j for j in df.columns if j not in index_cols + ['type']]
+    for y in yr_cols:
+        if y > base_year:
+            df[y] = df[base_year]
+    dfs.append(df)
+dfo = pd.concat(dfs).reset_index(drop=True)
+dfo = dfo.melt(id_vars=index_cols + ['type'], var_name='Year', value_name= 'Value')
+dfo = dfo.pivot_table(index=index_cols + ['Year'], columns='type', values='Value').reset_index()
+dfo.to_csv('out/' + WindCaseSwitch + '.csv', index=False)
 
 #Now do gdx modifications
 for gdxfile in gdx_input_files:
