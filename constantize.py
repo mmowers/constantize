@@ -3,14 +3,14 @@ import gdxpds
 import pandas as pd
 import os
 
-base_year = 2020
+base_year = 2024
 
 #Files to use
 gdx_input_files = [
     {'filename': 'input', 'path': '../inout/includes/'},
     {'filename': 'PrescriptiveBuilds', 'path': '../inout/includes/'},
     {'filename': 'PrescriptiveRetirements', 'path': '../inout/includes/'},
-    {'filename': 'CIRAinputs', 'path': '../inout/includes/'},
+    {'filename': 'CIRAinputs', 'path': '../inout/includes/CIRA_Inputs'},
     {'filename': 'rggi', 'path': '../inout/includes/'},
     {'filename': 'dSolar', 'path': '../inout/includes/'},
     {'filename': 'WindInput', 'path': '../inout/includes/Wind_Inputs/'},
