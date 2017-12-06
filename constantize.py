@@ -5,12 +5,15 @@ import os
 
 base_year = 2024
 
+distPVSwitch = 'StScen2017_Mid_Case'
+distPVFiles = ['distPVcap', 'distPVelecprice']
+
 #Files to use
 gdx_input_files = [
     {'filename': 'input', 'path': '../inout/includes/'},
     {'filename': 'PrescriptiveBuilds', 'path': '../inout/includes/'},
     {'filename': 'PrescriptiveRetirements', 'path': '../inout/includes/'},
-    {'filename': 'CIRAinputs', 'path': '../inout/includes/CIRA_Inputs'},
+    {'filename': 'CIRAinputs', 'path': '../inout/includes/CIRA_Inputs/'},
     {'filename': 'rggi', 'path': '../inout/includes/'},
     {'filename': 'dSolar', 'path': '../inout/includes/'},
     {'filename': 'WindInput', 'path': '../inout/includes/Wind_Inputs/'},
@@ -65,9 +68,18 @@ zeroed_params = [
 #clear outputs
 for dirname in ['out','out/changed params']:
     for f in os.listdir(dirname):
-        if f.endswith(".gdx"):
+        if f.endswith(".gdx") or f.endswith(".csv"):
             os.remove(os.path.join(dirname, f))
 
+#First do csv modifications
+for f in distPVFiles:
+    df = pd.read_csv('../inout/includes/dSolar_Inputs/' + f + '_' + distPVSwitch + '.csv', index_col=0)
+    for y in df.columns:
+        if int(y) > base_year:
+            df[y] = df[str(base_year)]
+    df.to_csv('out/' + f + '_' + distPVSwitch + '.csv')
+
+#Now do gdx modifications
 for gdxfile in gdx_input_files:
     symbol_list = []
     changed_list = []
