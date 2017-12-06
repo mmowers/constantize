@@ -1,6 +1,7 @@
 from __future__ import division
 import gdxpds
 import pandas as pd
+import os
 
 base_year = 2020
 
@@ -60,6 +61,12 @@ zeroed_params = [
     'WindBuildsIn',
     'WindRetireIn',
 ]
+
+#clear outputs
+for dirname in ['out','out/changed params']:
+    for f in os.listdir(dirname):
+        if f.endswith(".gdx"):
+            os.remove(os.path.join(dirname, f))
 
 for gdxfile in gdx_input_files:
     symbol_list = []
