@@ -65,7 +65,7 @@ zeroed_params = [
 ]
 
 #clear outputs
-for dirname in ['out','out/changed params']:
+for dirname in ['out','out/changed']:
     for f in os.listdir(dirname):
         if f.endswith(".gdx") or f.endswith(".csv"):
             os.remove(os.path.join(dirname, f))
@@ -156,4 +156,4 @@ for gdxfile in gdx_input_files:
     with gdxpds.gdx.GdxFile() as gdx:
         for symbol in changed_list:
             gdx.append(symbol)
-        gdx.write('out/changed params/' + gdxfile['filename'] + '.gdx')
+        gdx.write('out/changed/' + gdxfile['filename'] + '.gdx')
