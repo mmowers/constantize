@@ -32,7 +32,7 @@ excluded_params = [
     # 'load_proj_mult_mexico',
     # 'NG_Forecast',
     # 'PrescriptiveBuildshydcats',
-    #'PTCqallyears',
+    # 'PTCqallyears',
     # 'Ref_NG_Foresight',
     # 'UPV_FinwITC_all',
     # 'UPV_FinwPTC_all',
@@ -44,21 +44,21 @@ excluded_params = [
 
 #parameters to zero out post-base-year
 zeroed_params = [
-    #PrescriptiveBuilds.gdx
+    #within PrescriptiveBuilds.gdx
     'PrescriptiveBuildsNonQn',
     'PrescriptiveBuildsnqct',
     'PrescriptiveBuildsStorage',
     'PrescriptiveBuildsWind',
     'WindBuilds',
 
-    #PrescriptiveRetirements.gdx
+    #within PrescriptiveRetirements.gdx
     'ABBPrescriptiveRetNuke60',
     'ABBPrescriptiveRetNuke80',
     'ABBPrescriptiveRetNukeEarly',
     'ABBPrescriptiveRetNukeRef',
     'PrescriptiveRet',
 
-    #input.gdx
+    #within input.gdx
     'PrescriptiveBuildshydcats',
     'WindBuildsIn',
     'WindRetireIn',
