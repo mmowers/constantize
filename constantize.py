@@ -113,7 +113,8 @@ for gdxfile in gdx_input_files:
                     #check if this column is one of the set columns and full of all years
                     if col.name == '*' and col.str.match('^20[0-9]{2}$').all() and str(base_year) in col.values:
                         #rename columns to their indices
-                        df.columns = [str(j) for j in range(len(df.columns))]
+                        col_names = [str(j) for j in range(len(df.columns))]
+                        df.columns = col_names
                         #turn years into int so that we can find later years
                         yr = str(i)
                         df[yr] = pd.to_numeric(df[yr])
@@ -135,12 +136,14 @@ for gdxfile in gdx_input_files:
                                 if y > base_year:
                                     df[y] = df[base_year]
                         #melt back into flat dataframe
-                        df = df.melt(id_vars=index_cols, var_name='yr', value_name= 'Value')
+                        df = df.melt(id_vars=index_cols, var_name=yr, value_name= val)
                         # df = pd.melt(df, id_vars=index_cols, var_name='yr', value_name= 'Value')
                         #remove na
-                        df = df[pd.notnull(df['Value'])]
+                        df = df[pd.notnull(df[val])]
                         #convert years back to strings
-                        df['yr'] = df['yr'].astype(str)
+                        df[yr] = df[yr].astype(str)
+                        #reorder columns to original order
+                        df = df[col_names]
                         #rename columns back to *
                         df.columns = ['*']*(len(df.columns) - 1) + ['Value']
                         symbol.dataframe = df
