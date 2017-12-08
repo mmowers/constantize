@@ -106,6 +106,7 @@ for gdxfile in gdx_input_files:
         #for each symbol, find columns that match 4-digit years and modify so that all values for
         #later years are equal to the value for the specified year above. 
         for symbol in f:
+            symbol_new = None
             df = symbol.dataframe.copy()
             if symbol.name not in excluded_params and not df.empty:
                 for i in range(len(df.columns)):
@@ -143,11 +144,15 @@ for gdxfile in gdx_input_files:
                         df['yr'] = df['yr'].astype(str)
                         #rename columns back to *
                         df.columns = ['*']*(len(df.columns) - 1) + ['Value']
-                        symbol.dataframe = df
-                        changed_list.append(symbol)
+                        symbol_new = gdxpds.gdx.GdxSymbol(symbol.name,gdxpds.gdx.GamsDataType.Parameter, dims=df.columns.values.tolist())
+                        symbol_new.dataframe = df
+                        changed_list.append(symbol_new)
                         #only one columns is used to change values, so we break:
                         break
-            symbol_list.append(symbol)
+            if symbol_new != None:
+                symbol_list.append(symbol_new)
+            else:
+                symbol_list.append(symbol)
 
     with gdxpds.gdx.GdxFile() as gdx:
         for symbol in symbol_list:
