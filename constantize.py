@@ -34,6 +34,7 @@ excluded_params = [
     # 'PrescriptiveBuildshydcats',
     # 'PTCqallyears',
     # 'Ref_NG_Foresight',
+    # 'UPV_Deg_Foresight_all'
     # 'UPV_FinwITC_all',
     # 'UPV_FinwPTC_all',
     # 'W_FinwPTC_allyears',
@@ -62,6 +63,7 @@ zeroed_params = [
     'PrescriptiveBuildshydcats',
     'WindBuildsIn',
     'WindRetireIn',
+    'UPV_Deg_Rate_all',
 ]
 
 #clear outputs
@@ -97,7 +99,7 @@ dfo = dfo.melt(id_vars=index_cols + ['type'], var_name='Year', value_name= 'Valu
 dfo = dfo.pivot_table(index=index_cols + ['Year'], columns='type', values='Value').reset_index()
 dfo.to_csv('out/' + WindCaseSwitch + '.csv', index=False)
 
-#Now do gdx modifications
+#Now do general gdx modifications for modifying values after base year and modifying lifetime parameters
 for gdxfile in gdx_input_files:
     symbol_list = []
     changed_list = []
@@ -107,7 +109,16 @@ for gdxfile in gdx_input_files:
         #later years are equal to the value for the specified year above. 
         for symbol in f:
             df = symbol.dataframe.copy()
-            if symbol.name not in excluded_params and not df.empty:
+            #First do gdx modifications for lifetime parameters and degradation
+            if symbol.name in ['LTime', 'LtimeSt']:
+                symbol.dataframe['Value'] = 1000
+            elif symbol.name == 'windtemp':
+                symbol.dataframe.loc[symbol.dataframe['*'] == 'W_ltime', 'Value'] = 1000
+            elif symbol.name == 'CSPtemp':
+                symbol.dataframe.loc[symbol.dataframe['*'] == 'csp_ltime', 'Value'] = 1000
+            elif symbol.name == 'UPVtemp':
+                symbol.dataframe.loc[symbol.dataframe['*'] == 'UPV_ltime', 'Value'] = 1000
+            elif symbol.name not in excluded_params and not df.empty:
                 for i in range(len(df.columns)):
                     col = df.iloc[:, i]
                     #check if this column is one of the set columns and full of all years
