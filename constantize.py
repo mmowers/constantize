@@ -109,16 +109,7 @@ for gdxfile in gdx_input_files:
         #later years are equal to the value for the specified year above. 
         for symbol in f:
             df = symbol.dataframe.copy()
-            #First do gdx modifications for lifetime parameters and degradation
-            if symbol.name in ['LTime', 'LtimeSt']:
-                symbol.dataframe['Value'] = 1000
-            elif symbol.name == 'windtemp':
-                symbol.dataframe.loc[symbol.dataframe['*'] == 'W_ltime', 'Value'] = 1000
-            elif symbol.name == 'CSPtemp':
-                symbol.dataframe.loc[symbol.dataframe['*'] == 'csp_ltime', 'Value'] = 1000
-            elif symbol.name == 'UPVtemp':
-                symbol.dataframe.loc[symbol.dataframe['*'] == 'UPV_ltime', 'Value'] = 1000
-            elif symbol.name not in excluded_params and not df.empty:
+            if symbol.name not in excluded_params and not df.empty:
                 for i in range(len(df.columns)):
                     col = df.iloc[:, i]
                     #check if this column is one of the set columns and full of all years
