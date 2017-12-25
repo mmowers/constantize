@@ -64,6 +64,8 @@ zeroed_params = [
     'WindBuildsIn',
     'WindRetireIn',
     'UPV_Deg_Rate_all',
+    'DUPV_Deg_Rate_all',
+    'DistPV_Deg_Rate_all',
 ]
 
 #clear outputs
