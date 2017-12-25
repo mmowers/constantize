@@ -30,7 +30,7 @@ excluded_params = [
     # 'load_proj_mult',
     # 'load_proj_mult_canada',
     # 'load_proj_mult_mexico',
-    # 'NG_Forecast',
+    'NG_Forecast',
     # 'PrescriptiveBuildshydcats',
     # 'PTCqallyears',
     # 'Ref_NG_Foresight',
